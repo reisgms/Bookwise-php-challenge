@@ -5,6 +5,9 @@ use App\Http\Controllers\Auth\LogoutController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\CommentController;
+
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
 
 
 Route::get('/login', [LoginController::class, 'index'])->middleware('guest')->name('login');

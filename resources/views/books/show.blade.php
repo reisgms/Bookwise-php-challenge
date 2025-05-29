@@ -67,6 +67,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
+                <form method="POST" action="{{ route('comments.store') }}">
+                    @csrf
+                    <input type="hidden" name="book_id" value="{{ $book->id }}">
+                
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="rating">Nota</label>
@@ -87,6 +92,7 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     <button type="submit" class="btn btn-primary">Adicionar</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
