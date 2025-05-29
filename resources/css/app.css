@@ -1,0 +1,44 @@
+@import 'bootstrap';
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+.gap-1 {
+    gap: 0.25rem;
+}
+
+.gap-2 {
+    gap: 0.5rem;
+}
+
+.gap-3 {
+    gap: 1rem;
+}
+
+.gap-4 {
+    gap: 1.5rem;
+}
+
+.card-columns {
+    column-count: 1;
+
+    @media (min-width: 576px) { 
+        column-count: 2;
+    }
+
+    @media (min-width: 768px) { 
+        column-count: 2;
+    }
+
+    @media (min-width: 992px) { 
+        column-count: 4;
+    }
+}
