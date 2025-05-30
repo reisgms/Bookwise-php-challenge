@@ -6,6 +6,8 @@ use App\Http\Requests\StoreBookRequest;
 use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use App\Models\Comment;
+
 
 class BooksController extends Controller
 {
@@ -24,7 +26,7 @@ class BooksController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('books.my', compact('book'));
+        return view('books.my', compact('books')); //possivel erro, apagar o 's' de books
     }
 
     public function create()
@@ -35,7 +37,7 @@ class BooksController extends Controller
     public function store(StoreBookRequest $request)
     {
         $data = $request->validated();
-        $data['user_id'] = $requests->user()->id;
+        $data['user_id'] = $request->user()->id; // corrigido o erro de sintaxe -> $requests foi mudado para $request, conforme passado por paramentro
         Book::create($data);
 
         return to_route('books.my')->with('success', 'Book created successfully.');
@@ -43,7 +45,8 @@ class BooksController extends Controller
 
     public function show(Book $book)
     {
-        return view('books.show', compact('book'));
+        $comments = Comment::where('book_id', $book->id)->latest()->get();
+        return view('books.show', compact('book','comments' ));
     }
 
     public function edit(Book $book)

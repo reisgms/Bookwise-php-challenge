@@ -9,4 +9,11 @@ class Book extends Model
 {
     /** @use HasFactory<\Database\Factories\BookFactory> */
     use HasFactory;
+
+    protected $fillable = ['title', 'description', 'author']; // Permite atribuições em massa
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
