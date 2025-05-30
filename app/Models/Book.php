@@ -16,4 +16,17 @@ class Book extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    //metodo para calcular a media de avaliações
+    public function averageRating()
+{
+    return round($this->comments()->avg('rating') ?? 0, 1);
+}
+
+//adicionado metodo para contar total de avaliações
+public function totalRatings()
+{
+    return $this->comments()->count();
+}
+
 }

@@ -14,7 +14,12 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ $book->title }}</h5>
                             <p class="card-text">{{ str($book->description)->limit(50) }}</p>
-                             <p class="card-text text-right"><small class="text-muted"> ⭐⭐⭐⭐ (12 avaliações)</small></p>
+                            <p class="card-text text-right">
+                                <small class="text-muted">
+                                    ⭐ {{ str_repeat('⭐', round($book->comments->avg('rating') ?? 0)) }}
+                                    ({{ $book->comments->count() }} avaliações)
+                                </small>
+                            </p>
                             <footer class="blockquote-footer">
                                 <small>
                                     Autor <cite title="Título da fonte">{{ $book->author}}</cite>

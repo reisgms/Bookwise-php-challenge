@@ -13,7 +13,11 @@ class BooksController extends Controller
 {
     public function index(Request $request)
     {
-        $books = Book::query()->when($request->search, fn($query, $value) => $query->where('title', 'like', "%{$value}%"))->orderBy('created_at', 'desc')->get();
+        $books = Book::query()
+            ->with('comments') // Carrega os comentários junto com os livros
+            ->when($request->search, fn($query, $value) => $query->where('title', 'like', "%{$value}%"))
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return view('books.index', compact('books'));
     }
@@ -46,7 +50,12 @@ class BooksController extends Controller
     public function show(Book $book)
     {
         $comments = Comment::where('book_id', $book->id)->latest()->get();
-        return view('books.show', compact('book','comments' ));
+
+        // Calculando a média das avaliações
+        $averageRating = round($comments->avg('rating') ?? 0, 1);
+        $totalRatings = $comments->count();
+
+        return view('books.show', compact('book', 'comments', 'averageRating', 'totalRatings'));
     }
 
     public function edit(Book $book)
